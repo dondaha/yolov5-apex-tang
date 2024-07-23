@@ -93,12 +93,15 @@ def main():
         if len(aims):
             mouselock.set_lock_state(lock_mode)
             mouselock.lock(aims)
-            print(f"set mouse lock state to {lock_mode}")
+            # print(f"set mouse lock state to {lock_mode}")
             # print(f"mouse lock state: {lock_state}")
             for i, det in enumerate(aims):
+                # 给所有目标画框
                 tag, x_center, y_center, width, height = det
+                # 坐标转换，目前是用比例小数表示的，需要转换成实际坐标（0.500 -> 0.500 * shot_Width）
                 x_center, width = shot_Width * float(x_center), shot_Width * float(width)
                 y_center, height = shot_Height * float(y_center), shot_Height * float(height)
+                # 以截图区域的左上角为原点，计算目标的坐标
                 top_left = (int(x_center - width / 2.0), int(y_center - height / 2.0))
                 bottom_right = (int(x_center + width / 2.0), int(y_center + height / 2.0))
                 color = (0, 0, 255)  # BGR
